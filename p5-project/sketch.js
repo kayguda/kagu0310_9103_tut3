@@ -12,17 +12,17 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   imgDrwPrps.aspect = img.width / img.height;
-  canvasAspectRatio = width / height;
+  
   calculateImageDrawProps();
   let segmentWidth = img.width / numSegments;
   let segmentHeight = img.height / numSegments;
-  
 
   for (let segYPos=0; segYPos<img.height; segYPos+=segmentHeight) {
+    //this is looping over the height
     for (let segXPos=0; segXPos<img.width; segXPos+=segmentWidth) {
       let segmentColour = img.get(segXPos + segmentWidth / 2, segYPos + segmentHeight / 2);
-       let segment = new ImageSegment(segXPos,segYPos,segmentWidth,segmentHeight,segmentColour);
-       segments.push(segment);
+      let segment = new ImageSegment(segXPos,segYPos,segmentWidth,segmentHeight,segmentColour);
+      segments.push(segment);
     }
   }
 }
@@ -43,9 +43,13 @@ function keyPressed() {
   }
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  calculateImageDrawProps();
+}
 
 function calculateImageDrawProps() {
-
+  canvasAspectRatio = width / height;
   if (imgDrwPrps.aspect > canvasAspectRatio) {
     imgDrwPrps.width = width;
     imgDrwPrps.height = width / imgDrwPrps.aspect;
